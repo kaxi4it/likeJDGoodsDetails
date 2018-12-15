@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.guyj.copyjddetails.ui.MainActivity">
+
+    <com.guyj.copyjddetails.widgets.HorViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:id="@+id/viewEmptyTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#ffffff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewEmptyTop"
+        >
+
+
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/tl_1"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="#ffffff"
+            app:tl_textBold="SELECT"
+            app:tl_textSelectColor="#000000"
+            app:tl_textUnselectColor="#333333"
+            app:tl_indicator_color="#F3344A"
+            app:tl_indicator_height="2dp"
+            app:tl_tab_padding="10dp"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="#ffffff"
+            android:text="图文详情标题"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_back_black_bg"
+        app:layout_constraintTop_toTopOf="@id/rl_title"
+        app:layout_constraintBottom_toBottomOf="@id/rl_title"
+        app:layout_constraintLeft_toLeftOf="@id/rl_title"
+        android:layout_marginLeft="15dp"
+        />
+
+
+</android.support.constraint.ConstraintLayout>
