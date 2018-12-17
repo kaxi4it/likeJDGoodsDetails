@@ -5,15 +5,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.guyj.copyjddetails.R;
 import com.guyj.copyjddetails.adapter.RvSimpleAdapter;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +37,14 @@ public class DetailFragment extends Fragment {
 
 	private List<String> datas;
 	private RecyclerView mRecyclerView;
+	private RvSimpleAdapter mAdapter;
+	private Banner banner;//实际的banner，自行替换
+	private FrameLayout.LayoutParams mFrameLayoutParams;
 	private int scrollY;//mRecyclerView的总体滑动距离
 	private int banner_height;//mRecyclerView第一条banner的高度
+	private int real_height;
+
+	private List<String> images;
 
 	public DetailFragment() {
 	}
@@ -67,13 +77,15 @@ public class DetailFragment extends Fragment {
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mRecyclerView=view.findViewById(R.id.rv);
+
 		datas=new ArrayList<>();
 		//假数据
 		for (int i = 0; i < 10; i++) {
 			datas.add("");
 		}
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-		mRecyclerView.setAdapter(new RvSimpleAdapter(getActivity(),datas));
+		mRecyclerView.setAdapter(mAdapter=new RvSimpleAdapter(getActivity(),datas));
+
 		mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -84,7 +96,18 @@ public class DetailFragment extends Fragment {
 			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 				super.onScrolled(recyclerView, dx, dy);
 				scrollY+=dy;//计算总滑动距离
-				banner_height=recyclerView.getLayoutManager().getChildAt(0).getHeight();//计算第一条banner高度
+				if (scrollY==0){
+					banner_height=mRecyclerView.getLayoutManager().getChildAt(0).getHeight();//计算第一条banner高度
+				}
+				if (scrollY<banner_height){
+					View view=recyclerView.getLayoutManager().getChildAt(0).findViewById(R.id.banner);
+					if (view!=null){
+						ConstraintLayout.LayoutParams mLayoutParams=(ConstraintLayout.LayoutParams)(view.getLayoutParams());
+						mLayoutParams.topMargin=(int)(scrollY/1.5);
+						Log.e("tag","topMargin="+scrollY/2);
+						view.setLayoutParams(mLayoutParams);
+					}
+				}
 				if (mListener != null) {//发送回调给activity接收处理，数据封在uri里
 					Uri.Builder builder=new Uri.Builder();
 					Uri uri=builder.scheme("scheme")
@@ -97,7 +120,6 @@ public class DetailFragment extends Fragment {
 				}
 			}
 		});
-
 	}
 
 	@Override

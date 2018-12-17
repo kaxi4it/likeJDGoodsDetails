@@ -4,9 +4,17 @@
              android:layout_height="match_parent"
              >
 
+    <!--<com.youth.banner.Banner-->
+        <!--android:id="@+id/banner"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="300dp"/>-->
+
 <android.support.v7.widget.RecyclerView
     android:id="@+id/rv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    />
+
+
 
 </FrameLayout>
